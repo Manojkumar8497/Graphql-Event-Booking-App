@@ -1,0 +1,7 @@
+{
+  "env": {
+    "MONGO_URI": "mongodb://localhost:27017/",
+    "DB_NAME": "graphql",
+    "JWT_KEY": "SuperSecretKey5074909718496732"
+  }
+}
