@@ -25,6 +25,10 @@ module.exports = {
         }
         try {
             const { eventId } = args;
+            const checkBooked = await Booking.findOne({ event: eventId, user: req.userId });
+            if (checkBooked) {
+                return transformBooking(checkBooked);
+            }
             const booking = await Booking({
                 event: eventId,
                 user: req.userId
@@ -42,7 +46,7 @@ module.exports = {
         }
         try {
             const { bookingId } = args;
-            const booking = await Booking.findOne({ _id: bookingId }).populate('event');
+            const booking = await Booking.findOne({ _id: bookingId, user: req.userId }).populate('event');
             const event = transformEvent(booking.event);
             await Booking.deleteOne({ _id: bookingId });
             return event;

@@ -60,12 +60,15 @@ class Bookings extends Component {
     // Send the req to backend
     const requestBody = {
       query: `
-          mutation{
-            cancelBooking(bookingId:"${bookingId}"){
+          mutation CancelBooking($id:ID!){
+            cancelBooking(bookingId:$id){
               _id
             }
           }
         `,
+      variables: {
+        id: bookingId,
+      },
     };
     fetch("http://localhost:8000/api/graphql", {
       method: "POST",
@@ -99,11 +102,13 @@ class Bookings extends Component {
       <React.Fragment>
         {this.state.isLoading ? (
           <Spinner />
-        ) : (
+        ) : this.state.bookings.length > 0 ? (
           <BookingList
             bookings={this.state.bookings}
             onCancelBooking={this.cancelBookingHandler}
           />
+        ) : (
+          <p className="text-center">You didn't booked any event yet:(</p>
         )}
       </React.Fragment>
     );

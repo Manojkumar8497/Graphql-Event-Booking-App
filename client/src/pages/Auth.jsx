@@ -26,26 +26,34 @@ class Auth extends Component {
     }
     let requestBody = {
       query: `
-        query{
-          login(userInput:{email:"${email}",password:"${password}"}){
+        query Login($email:String!, $password:String!){
+          login(userInput:{email:$email,password:$password}){
             userId
             token
             tokenExpiration
           }
         }
         `,
+      variables: {
+        email,
+        password,
+      },
     };
 
     if (!this.state.isLogin) {
       requestBody = {
         query: `
-        mutation{
-          createUser(userInput:{email:"${email}",password:"${password}"}){
+        mutation CreateUser($email: String!, $password: String!){
+          createUser(userInput:{email:$email,password:$password}){
             _id
             email
           }
         }
         `,
+        variables: {
+          email,
+          password,
+        },
       };
     }
     fetch("http://localhost:8000/api/graphql", {
@@ -88,7 +96,7 @@ class Auth extends Component {
         <div className="form-actions">
           <button type="submit">Submit</button>
           <button type="button" onClick={this.switchModeHandler}>
-            Switch to {!this.state.isLogin ? "SignIn" : "SignUp"}
+            Switch to {this.state.isLogin ? "SignUp" : "SignIn"}
           </button>
         </div>
       </form>
