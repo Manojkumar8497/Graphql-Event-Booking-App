@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Lato', sans-serif;
+}
+
+.text-center {
+  text-align: center;
+}
+
+form {
+  padding-right: .5rem;
+}
+
+.form-control {
+  margin: 1rem 0;
+}
+
+.form-control label {
+  margin-bottom: 0.5rem;
+}
+
+.form-control label, .form-control input, .form-control textarea {
+  width: 100%;
+  display: block;
+}
+
+.form-actions button, .btn {
+  padding: 0.35rem 1rem;
+  font: inherit;
+  background: #3f51b5;
+  border: 1px solid #3f51b5;
+  border-radius: 5px;
+  margin-right: 1rem;
+  color: #ffffff;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.26);
+  cursor: pointer;
+}
+
+.form-actions button:hover, .form-actions button:active, .btn:hover, .btn:active {
+  background: #3f51b5;
+}

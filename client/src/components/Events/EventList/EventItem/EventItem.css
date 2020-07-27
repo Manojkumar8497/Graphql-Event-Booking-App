@@ -1,0 +1,24 @@
+.events-list-item {
+    margin: 1rem 0;
+    padding: 1rem;
+    border: 2px solid #3f51b5;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.events-list-item .header h1 {
+    font-size: 1.6rem;
+    color: #3f51b5;
+    margin: 0;
+}
+
+.events-list-item .header h2 {
+    font-size: 1rem;
+    margin: 5px 0;
+    color: #7e7e7e;
+}
+
+.events-list-item .actions p{
+    margin: 5px 0;
+}

@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 // GraphQl
 const { graphqlHTTP } = require('express-graphql');
 const graphqlSchema = require('./graphql/schema/index');
@@ -14,6 +15,18 @@ const app = express();
 // Body parser setup
 app.use(bodyParser.json());
 
+// CORS
+app.use(cors());
+// app.use((req, res, next) => {
+//     res.setHeader('Access-Control-Allow-Origin', '*');
+//     res.setHeader('Access-Control-Allow-Methods','GET,POST,OPTIONS');
+//     res.setHeader('Access-Control-Allow-Headers','Content-Type, Authorization');
+//     if(req.method === 'OPTIONS'){
+//         res.sendStatus(200);
+//     }
+//     next();
+// })
+
 // Authentication middleware
 app.use(checkAuth);
 
@@ -27,7 +40,7 @@ app.use('/api/graphql', graphqlHTTP({
 }));
 
 // Port config
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8000;
 
 app.listen(PORT, () => {
     console.log(`Server runs on port: ${PORT}`)
