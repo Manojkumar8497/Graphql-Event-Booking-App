@@ -233,19 +233,32 @@ class Events extends Component {
             <Modal
               title={this.state.selectedEvent.title}
               isCancel
-              isConfirm
+              isConfirm={
+                this.context.userId !== this.state.selectedEvent.creator._id
+                  ? true
+                  : false
+              }
               onCancel={this.onModalCancelHandler}
               onConfirm={this.onBookEventHandler}
-              confirmText={this.context.token ? "Book" : "Login to Book"}
+              confirmText={
+                this.context.token &&
+                this.context.userId !== this.state.selectedEvent.creator._id
+                  ? "Book"
+                  : "Login to Book"
+              }
             >
-              <h1>{this.state.selectedEvent.title}</h1>
+              <p>{this.state.selectedEvent.description}</p>
               <h2>
                 &#8377; {this.state.selectedEvent.price} -{" "}
                 {new Date(
                   +this.state.selectedEvent.createdAt
                 ).toLocaleDateString()}
               </h2>
-              <p>{this.state.selectedEvent.description}</p>
+              {this.context.userId === this.state.selectedEvent.creator._id && (
+                <small>
+                  <b>*You're the owner of this event :)</b>
+                </small>
+              )}
             </Modal>
           </React.Fragment>
         )}
@@ -262,7 +275,6 @@ class Events extends Component {
         ) : this.state.events.length > 0 ? (
           <EventList
             events={this.state.events}
-            authUserId={this.context.userId}
             onViewDetail={this.ShowDetailHandler}
           />
         ) : (

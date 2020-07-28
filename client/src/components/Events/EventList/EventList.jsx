@@ -8,7 +8,6 @@ const eventList = (props) => {
     <EventItem
       event={event}
       key={event._id}
-      userId={props.authUserId}
       onDetail={props.onViewDetail}
     />
   ));

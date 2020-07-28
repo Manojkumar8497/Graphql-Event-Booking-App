@@ -11,16 +11,12 @@ const eventItem = (props) => (
       </h2>
     </div>
     <div className="actions">
-      {props.userId === props.event.creator._id ? (
-        <p>You can't book your own event!</p>
-      ) : (
-        <button
-          className="btn"
-          onClick={props.onDetail.bind(this, props.event._id)}
-        >
-          View Details
-        </button>
-      )}
+      <button
+        className="btn"
+        onClick={props.onDetail.bind(this, props.event._id)}
+      >
+        View Details
+      </button>
     </div>
   </li>
 );
