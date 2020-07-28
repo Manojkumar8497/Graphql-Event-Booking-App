@@ -3,11 +3,14 @@ import React, { Component } from "react";
 import AuthContext from "../context/context";
 import Spinner from "../components/Spinner/Spinner";
 import BookingList from "../components/Bookings/BookingList/BookingList";
+import BookingsChart from "../components/Bookings/BookingsChart/BookingsChart";
+import BookingsControl from "../components/Bookings/BookingsControl/BookingsControl";
 
 class Bookings extends Component {
   state = {
     isLoading: false,
     bookings: [],
+    outputType: "list",
   };
   static contextType = AuthContext;
   componentDidMount() {
@@ -25,6 +28,7 @@ class Bookings extends Component {
               event{
                 _id,
                 title,
+                price,
                 createdAt
               }
             }
@@ -97,21 +101,46 @@ class Bookings extends Component {
         console.log(err);
       });
   };
+
+  changeOutputHandler = (outputType) => {
+    if (outputType === "list") {
+      this.setState({ outputType: "list" });
+    } else {
+      this.setState({ outputType: "chart" });
+    }
+  };
+
   render() {
-    return (
-      <React.Fragment>
-        {this.state.isLoading ? (
-          <Spinner />
-        ) : this.state.bookings.length > 0 ? (
-          <BookingList
-            bookings={this.state.bookings}
-            onCancelBooking={this.cancelBookingHandler}
+    let content = <Spinner />;
+    if (!this.state.isLoading) {
+      content = (
+        <React.Fragment>
+          <BookingsControl
+            onChange={this.changeOutputHandler}
+            activeOutputType={this.state.outputType}
           />
-        ) : (
-          <p className="text-center">You didn't booked any event yet:(</p>
-        )}
-      </React.Fragment>
-    );
+          <div>
+            {this.state.outputType === "list" ? (
+              this.state.bookings.length > 0 ? (
+                <BookingList
+                  bookings={this.state.bookings}
+                  onCancelBooking={this.cancelBookingHandler}
+                />
+              ) : (
+                <p className="text-center">
+                  You didn't booked any event yet :(
+                </p>
+              )
+            ) : this.state.bookings.length > 0 ? (
+              <BookingsChart bookings={this.state.bookings} />
+            ) : (
+              <p className="text-center">Book events to see the chart :(</p>
+            )}
+          </div>
+        </React.Fragment>
+      );
+    }
+    return <React.Fragment>{content}</React.Fragment>;
   }
 }
 

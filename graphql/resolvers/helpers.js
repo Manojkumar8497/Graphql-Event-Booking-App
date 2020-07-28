@@ -17,7 +17,6 @@ const userLoader = new DataLoader(userIds => {
 const getUser = async (userID) => {
     try {
         const user = await userLoader.load(userID.toString());
-        console.log(user.createdEvents);
         return { ...user._doc, createdEvents: () => eventLoader.loadMany(user.createdEvents) };
     }
     catch (err) {
